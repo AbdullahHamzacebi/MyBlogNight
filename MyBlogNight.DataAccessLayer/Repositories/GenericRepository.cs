@@ -8,15 +8,24 @@ using System.Threading.Tasks;
 
 namespace MyBlogNight.DataAccessLayer.Repositories
 {
-    // interface interface i miras alır.
-    // Ama burda bir class interface i miras alıyor.
+    // interface interface'i miras alır.
+    // Ama burda bir class interface'i miras alıyor.
     public class GenericRepository<T> : IGenericDal<T> where T : class
     {
         // private : sadece bu sınıfta erişebilir
         // readonly : sadece okunabilir. 
         // private readonly : sadece bu sınıftan okunabilir anlamında.
 
+        // nesne oluşturmak için mesela örnekteki gibi (private readonly BlogContext _context;  new'lerim. O sayede yapıcı metod oluşur.)
+        // yapıcı metod : bir sınıf çağırıldığında ilk olarak çalışan yer.
+
         private readonly BlogContext _context;
+
+        public GenericRepository(BlogContext context)
+        {
+            _context = context;
+        }
+
         public void Delete(int id)
         {
             var value = _context.Set<T>().Find(id);
