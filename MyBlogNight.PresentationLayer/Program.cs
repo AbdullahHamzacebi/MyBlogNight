@@ -1,6 +1,19 @@
+using MyBlogNight.DataAccessLayer.Context;
+using MyBlogNight.EntityLayer.Concrete;
+using MyBlogNight.PresentationLayer.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+//DbContext'den sadece devam etmek istiyorum dersen aþaðýdaki
+builder.Services.AddDbContext<BlogContext>();
+
+
+//Identity kullanmak istiyorsak aþaðýdaki yazdýðýmýz olmalý. EN son olarak da error kýsmýný ekledik.
+builder.Services.AddIdentity<AppUser,AppRole>().AddEntityFrameworkStores<BlogContext>().AddErrorDescriber<CustomIdentityErrorValidator>();
+
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
