@@ -1,4 +1,8 @@
+using MyBlogNight.BusinessLayer.Abstract;
+using MyBlogNight.BusinessLayer.Concrete;
+using MyBlogNight.DataAccessLayer.Abstarct;
 using MyBlogNight.DataAccessLayer.Context;
+using MyBlogNight.DataAccessLayer.EntityFramework;
 using MyBlogNight.EntityLayer.Concrete;
 using MyBlogNight.PresentationLayer.Models;
 
@@ -13,6 +17,11 @@ builder.Services.AddDbContext<BlogContext>();
 //Identity kullanmak istiyorsak aþaðýdaki yazdýðýmýz olmalý. EN son olarak da error kýsmýný ekledik.
 builder.Services.AddIdentity<AppUser,AppRole>().AddEntityFrameworkStores<BlogContext>().AddErrorDescriber<CustomIdentityErrorValidator>();
 
+builder.Services.AddScoped<IArticleDal, EfArticleDal>();
+builder.Services.AddScoped<IArticleService, ArticleManager>();
+
+builder.Services.AddScoped<ICategoryDal,EfCategoryDal>();
+builder.Services.AddScoped<ICategoryService, CategoryManager>();
 
 builder.Services.AddControllersWithViews();
 
@@ -30,7 +39,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();  // Bu sayfaya sadece adminler eriþsin anlamýnda.
 app.UseAuthorization();
 
 app.MapControllerRoute(

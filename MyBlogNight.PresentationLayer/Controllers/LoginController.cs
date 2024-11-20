@@ -1,14 +1,15 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MyBlogNight.EntityLayer.Concrete;
+using MyBlogNight.PresentationLayer.Models;
 
 namespace MyBlogNight.PresentationLayer.Controllers
 {
-    public class LoginController1 : Controller
+    public class LoginController : Controller
     {
         private readonly SignInManager<AppUser> _signInManager;
 
-        public LoginController1(SignInManager<AppUser> signInManager)
+        public LoginController(SignInManager<AppUser> signInManager)
         {
             _signInManager = signInManager;
         }
@@ -17,8 +18,37 @@ namespace MyBlogNight.PresentationLayer.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Index(LoginViewModel model)
+        {
+            // asyn metodu kullanmak için arada başka bir yapıyı beraber kullanmak için kullandığım metod (await)
+            // lockoutOnFailure : her bir yanlış giriş sayısını sayması.
+            var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password,false, true);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index","Category");
+            }
+            else
+            {
+                return View();
+            }
+        }
     }
 }
+
+/* 
+
+ Bunları kesin bitir.
+ 
+ 50 Derste MVC
+ 50 Derste Tatil Seyahat Sitesi
+ Mvc5 Admin Panelli Cv Sitesi
+ Mvc Proje Kampı(25 saat)
+ AspNet Core ile Adım Adım Web Geliştirme
+
+ */
+
 /*  Register'ı kullanana UserManager'dı 
     Login işlemlerini de kullanan SignInManager 
 
