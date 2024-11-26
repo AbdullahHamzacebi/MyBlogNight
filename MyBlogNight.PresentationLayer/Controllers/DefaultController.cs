@@ -13,3 +13,5 @@ namespace MyBlogNight.PresentationLayer.Controllers
 
 // MVC proje kampı 
 // Udemy .net core adım adım web geliştirme
+// Asp.net core portfolyo 1
+// Asp.net core portfolyo 2
