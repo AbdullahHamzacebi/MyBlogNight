@@ -10,5 +10,6 @@ namespace MyBlogNight.DataAccessLayer.Abstarct
     public interface IArticleDal : IGenericDal<Article>
     {
         List<Article> ArticleListWithCategory();
+        List<Article> ArticleListWithCategoryAndAppUser();
     }
 }

@@ -25,5 +25,12 @@ namespace MyBlogNight.DataAccessLayer.EntityFramework
 
             //include = ilişkisel tablo arasındaki bağlantıyı sağlıyor.
         }
+
+        public List<Article> ArticleListWithCategoryAndAppUser()
+        {
+            var context = new BlogContext();
+            var values = context.Articles.Include(x =>x.Category).Include(y => y.AppUser).ToList();
+            return values;
+        }
     }
 }

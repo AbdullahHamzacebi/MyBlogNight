@@ -13,6 +13,9 @@ namespace MyBlogNight.EntityLayer.Concrete
         public string Name { get; set; }
         public string Surname { get; set; }
         public string ImageUrl { get; set; }
+        public List<Article> Articles { get; set; }
 
+        // Update-database dediğimizde hata vermesinin sebebi içinde veri olmasından ve SQL'de veriyi silmek için kullanılan metod. 
+        // Truncate Table Articles (Articles içindeki verileri siler) bu metodu dedikten sonra update-database dediğimizde çalışır.
     }
 }
