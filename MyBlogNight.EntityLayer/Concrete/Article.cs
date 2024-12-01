@@ -19,6 +19,8 @@ namespace MyBlogNight.EntityLayer.Concrete
         public AppUser AppUser { get; set; }
         public string Detail { get; set; }
         public int? ArticleViewCount { get; set; }
+        public List<Comment> Comments { get; set; }
+
 
     }
 }

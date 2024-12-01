@@ -9,5 +9,6 @@ namespace MyBlogNight.DataAccessLayer.Abstarct
 {
     public interface ICommentDal : IGenericDal<Comment>
     {
+        List<Comment> GetCommentsByArticleId(int id);
     }
 }

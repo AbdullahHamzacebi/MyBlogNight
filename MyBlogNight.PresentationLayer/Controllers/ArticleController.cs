@@ -49,5 +49,45 @@ namespace MyBlogNight.PresentationLayer.Controllers
             _articleService.TDelete(id);
             return RedirectToAction("ArticleList");
         } 
+
+        public IActionResult ArticleDetail(int id)
+        {
+            _articleService.TArticleViewCountIncrease(id);
+
+            var value = _articleService.TArticleListWithCategoryAndAppUserByArticleId(id);
+            return View(value);
+        }
     }
 }
+/*
+ 
+ 
+API projesinde 2 tane entity category ve product olacak ilişkisi olacak birlikte
+bizden komple proje yapmamızı isteyecek hocamız ve 1 haftada bitirecek dersi 4 derste 
+
+Rapid Api ye geçecez sonra bizden tekrardan proje isteyecek hocamız.(1 derste anlatacak hocamız 6.proje bitecek)
+
+
+Dapper query bazlı çalışacaz 2 ders sürecek ve yine 1 tane proje
+
+mongodb çalışacaz 
+
+postsql çalışacaz
+
+bunların hepsi proje 
+
+json token çalışacaz sonra bunlar da bitecek (1 ders sürecek)
+
+signalR çalışacaz (biraz uzun sürecek)
+
+angular projesi
+
+hepsine yönelik bir proje 
+
+OnionArtitecture
+
+mikroservis olacak (17-18 ders ve ağırlıklı backend projesi olacak.) (16-17 katmanlı olacak.)
+
+
+ 
+ */ 
