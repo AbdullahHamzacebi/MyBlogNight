@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using FluentValidation.Results;
 using MyBlogNight.BusinessLayer.Abstract;
+using MyBlogNight.BusinessLayer.ValidationRules.CategoryValidationRules;
 using MyBlogNight.EntityLayer.Concrete;
+
 
 namespace MyBlogNight.PresentationLayer.Controllers
 {
@@ -28,6 +31,24 @@ namespace MyBlogNight.PresentationLayer.Controllers
         [HttpPost]
         public IActionResult CreateCategory(Category category)
         {
+            ModelState.Clear(); // mevcuttaki bütün anotation kurallarını siliyoruz ve kendi yazdığımız kuralları uyguluyoruz.
+            CreateCategoryValidator validationRules = new CreateCategoryValidator();
+            ValidationResult result = validationRules.Validate(category);
+            if (result.IsValid)
+            {
+                _categoryService.TInsert(category);
+                return RedirectToAction("CategoryList");
+            }
+            else
+            {
+                foreach (var item in result.Errors)
+                {
+                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                }
+                return View();
+            }
+
+
             _categoryService.TInsert(category);
             return RedirectToAction("CategoryList");
 

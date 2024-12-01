@@ -1,5 +1,7 @@
+using FluentValidation.AspNetCore;
 using MyBlogNight.BusinessLayer.Abstract;
 using MyBlogNight.BusinessLayer.Concrete;
+using MyBlogNight.BusinessLayer.Container.Container;
 using MyBlogNight.DataAccessLayer.Abstarct;
 using MyBlogNight.DataAccessLayer.Context;
 using MyBlogNight.DataAccessLayer.EntityFramework;
@@ -17,19 +19,9 @@ builder.Services.AddDbContext<BlogContext>();
 //Identity kullanmak istiyorsak aþaðýdaki yazdýðýmýz olmalý. EN son olarak da error kýsmýný ekledik.
 builder.Services.AddIdentity<AppUser,AppRole>().AddEntityFrameworkStores<BlogContext>().AddErrorDescriber<CustomIdentityErrorValidator>();
 
-builder.Services.AddScoped<IArticleDal, EfArticleDal>();
-builder.Services.AddScoped<IArticleService, ArticleManager>();
+builder.Services.ContainerDependencies();
 
-builder.Services.AddScoped<ICategoryDal,EfCategoryDal>();
-builder.Services.AddScoped<ICategoryService, CategoryManager>();
-
-builder.Services.AddScoped<ISocialMediaDal,EfSocialMediaDal>();
-builder.Services.AddScoped<ISocialMediaService, SocialMediaManager>();
-
-builder.Services.AddScoped<ICommentDal, EfCommentDal>();
-builder.Services.AddScoped<ICommentService, CommentManager>();
-
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddFluentValidation();
 
 var app = builder.Build();
 
@@ -51,5 +43,15 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+      name: "areas",
+      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+    );
+});
+
 
 app.Run();

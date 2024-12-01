@@ -13,6 +13,7 @@ namespace MyBlogNight.BusinessLayer.Abstract
         public List<Article> TArticleListWithCategoryAndAppUser();
         public Article TArticleListWithCategoryAndAppUserByArticleId(int id);
         public void TArticleViewCountIncrease(int id);
+        public List<Article> TGetArticlesByAppUserId(int id);
     }
 }
 // engin demiroğlu, gençay yıldız.
